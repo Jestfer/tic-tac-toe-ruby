@@ -63,5 +63,11 @@ describe Game do
 
       expect{ game.claim_field(1) }.to raise_error "Field already claimed!"
     end
+
+    it "should change turn automatically if claiming field is OK" do
+      game.claim_field(1)
+
+      expect(game.current_turn).to eq player_2
+    end
   end
 end
