@@ -10,19 +10,51 @@ class Game
 
   def claim_field(num)
     field_empty?(num)
+    
     @board.fields[num] = @current_turn.symbol
-    next_turn
-
-    @board.fields
+    
+    game_over?
   end
 
   private
+
+  def game_over?
+    win_conditions
+
+    @win_conditions.each do |condition|
+      return "#{@current_turn.name} wins!" if condition.all? { |val| val == 'X' }
+      return "#{@current_turn.name} wins!" if condition.all? { |val| val == 'O' }
+    end
+
+    next_turn
+  end
 
   def field_empty?(num)
     raise "Field already claimed!" unless @board.fields[num].empty?
   end
 
   def next_turn
-    @current_turn == player1 ? @current_turn = player2 : current_turn = player1
+    @current_turn == player1 ? @current_turn = player2 : @current_turn = player1
+  end
+
+  def win_conditions
+    @win_conditions = [
+      # Row 1
+      [@board.fields[1], @board.fields[2], @board.fields[3]],
+      # Row 2
+      [@board.fields[4], @board.fields[5], @board.fields[6]],
+      # Row 3
+      [@board.fields[7], @board.fields[8], @board.fields[9]],
+      # Column 1
+      [@board.fields[1], @board.fields[4], @board.fields[7]],
+      # Column 2
+      [@board.fields[2], @board.fields[5], @board.fields[8]],
+      # Column 3
+      [@board.fields[3], @board.fields[6], @board.fields[9]],
+      # Diagonal 1
+      [@board.fields[1], @board.fields[5], @board.fields[9]],
+      # Diagonal 2
+      [@board.fields[3], @board.fields[5], @board.fields[7]],
+  ]
   end
 end

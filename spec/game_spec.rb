@@ -70,4 +70,29 @@ describe Game do
       expect(game.current_turn).to eq player_2
     end
   end
+
+  # Should be part of the #claim_field describe block
+  describe "#game_over?" do
+    it "should declare a winner if there is one" do
+      game.claim_field(1)
+      game.claim_field(4)
+
+      game.claim_field(2)
+      game.claim_field(5)
+
+      expect(game.claim_field(3)).to eq "#{player_1.name} wins!"
+    end
+
+    it "should declare another winner if he won" do
+      game.claim_field(4)
+      game.claim_field(1)
+
+      game.claim_field(5)
+      game.claim_field(2)
+
+      game.claim_field(9)
+
+      expect(game.claim_field(3)).to eq "#{player_2.name} wins!"
+    end
+  end
 end
