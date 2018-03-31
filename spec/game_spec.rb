@@ -27,7 +27,7 @@ describe Game do
       expect(game.player2.name).to eq 'Josu'
       expect(game.player2.symbol).to eq 'O'
 
-      expect(game.fields.fields).to eq({
+      expect(game.board.fields).to eq({
         1 => '',
         2 => '',
         3 => '',
@@ -41,7 +41,21 @@ describe Game do
     end
 
     it "should set first turn for Player 1 automatically" do
-      expect(game.current_turn).to eq 'Jaime'
+      expect(game.current_turn).to eq player_1
+    end
+  end
+
+  describe "#claim_field" do
+    it "should allow player (current_turn) to claim an empty field" do
+      allow(game.board.fields).to receive(:[]).with(1).and_return('X')
+      # allow(game.board.fields).to receive(:[]).with(1)
+      # allow(game.board.fields).to receive(:[])
+
+      game.claim_field(1)
+      # expect(game.claim_field(1)).to eq 'X'
+      #p game.board.fields
+      
+      expect(game.board.fields[1]).to eq 'X'
     end
   end
 end
