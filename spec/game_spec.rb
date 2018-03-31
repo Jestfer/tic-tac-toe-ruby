@@ -39,5 +39,9 @@ describe Game do
         9 => '',
       })
     end
+
+    it "should set first turn for Player 1 automatically" do
+      expect(game.current_turn).to eq 'Jaime'
+    end
   end
 end
