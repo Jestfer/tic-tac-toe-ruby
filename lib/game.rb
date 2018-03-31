@@ -9,6 +9,15 @@ class Game
   end
 
   def claim_field(num)
+    field_empty?(num)
     @board.fields[num] = @current_turn.symbol
+    
+    @board.fields
+  end
+
+  private
+
+  def field_empty?(num)
+    raise "Field already claimed!" unless @board.fields[num].empty?
   end
 end

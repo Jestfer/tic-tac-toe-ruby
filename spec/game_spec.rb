@@ -47,15 +47,21 @@ describe Game do
 
   describe "#claim_field" do
     it "should allow player (current_turn) to claim an empty field" do
-      allow(game.board.fields).to receive(:[]).with(1).and_return('X')
+      # allow(game.board.fields).to receive(:[]).with(1).and_return('X')
       # allow(game.board.fields).to receive(:[]).with(1)
       # allow(game.board.fields).to receive(:[])
 
       game.claim_field(1)
       # expect(game.claim_field(1)).to eq 'X'
-      #p game.board.fields
-      
+
       expect(game.board.fields[1]).to eq 'X'
+    end
+
+    it "should raise an exception if field is taken" do
+      # allow(game.board.fields).to receive(:[]).with(1).and_return('X')
+      game.claim_field(1)
+
+      expect{ game.claim_field(1) }.to raise_error "Field already claimed!"
     end
   end
 end
