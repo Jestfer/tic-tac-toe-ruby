@@ -69,6 +69,17 @@ describe Game do
 
       expect(game.current_turn).to eq player_2
     end
+
+    it "should raise an excepcion if player claims a field when game is over" do
+      game.claim_field(1)
+      game.claim_field(4)
+
+      game.claim_field(2)
+      game.claim_field(5)
+
+      game.claim_field(3)
+      expect{ game.claim_field(6) }.to raise_error "Game is over!"
+    end
   end
 
   # Should be part of the #claim_field describe block

@@ -6,10 +6,11 @@ class Game
     @player2 = player2
     @board = fields
     @current_turn = player1
+    @finished = false
   end
 
   def claim_field(num)
-    field_empty?(num)
+    legal?(num)
 
     @board.fields[num] = @current_turn.symbol
 
@@ -21,6 +22,9 @@ class Game
   def game_over?
     win_conditions
     @win_conditions.each do |condition|
+      end_game if condition.all? { |val| val == 'X' }
+      end_game if condition.all? { |val| val == 'O' }
+
       return "#{@current_turn.name} wins!" if condition.all? { |val| val == 'X' }
       return "#{@current_turn.name} wins!" if condition.all? { |val| val == 'O' }
     end
@@ -30,7 +34,8 @@ class Game
     next_turn
   end
 
-  def field_empty?(num)
+  def legal?(num)
+    raise "Game is over!" if @finished == true
     raise "Field already claimed!" unless @board.fields[num].empty?
   end
 
@@ -39,7 +44,11 @@ class Game
   end
 
   def draw?
-    !@board.fields.values.any? &:empty?
+    end_game if !@board.fields.values.any? &:empty?
+  end
+
+  def end_game
+    @finished = true
   end
 
   def win_conditions
