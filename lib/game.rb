@@ -10,9 +10,9 @@ class Game
 
   def claim_field(num)
     field_empty?(num)
-    
+
     @board.fields[num] = @current_turn.symbol
-    
+
     game_over?
   end
 
@@ -20,11 +20,12 @@ class Game
 
   def game_over?
     win_conditions
-
     @win_conditions.each do |condition|
       return "#{@current_turn.name} wins!" if condition.all? { |val| val == 'X' }
       return "#{@current_turn.name} wins!" if condition.all? { |val| val == 'O' }
     end
+
+    return "It's a draw!" if draw?
 
     next_turn
   end
@@ -35,6 +36,10 @@ class Game
 
   def next_turn
     @current_turn == player1 ? @current_turn = player2 : @current_turn = player1
+  end
+
+  def draw?
+    !@board.fields.values.any? &:empty?
   end
 
   def win_conditions
@@ -55,6 +60,6 @@ class Game
       [@board.fields[1], @board.fields[5], @board.fields[9]],
       # Diagonal 2
       [@board.fields[3], @board.fields[5], @board.fields[7]],
-  ]
+    ]
   end
 end

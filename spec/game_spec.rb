@@ -94,5 +94,21 @@ describe Game do
 
       expect(game.claim_field(3)).to eq "#{player_2.name} wins!"
     end
+
+    it "should declare draw if there is no winner" do
+      game.claim_field(5)
+      game.claim_field(4)
+
+      game.claim_field(6)
+      game.claim_field(7)
+
+      game.claim_field(1)
+      game.claim_field(9)
+
+      game.claim_field(8)
+      game.claim_field(2)
+
+      expect(game.claim_field(3)).to eq "It's a draw!"
+    end
   end
 end
