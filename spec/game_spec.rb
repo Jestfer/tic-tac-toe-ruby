@@ -14,7 +14,7 @@ describe Game do
     6 => '',
     7 => '',
     8 => '',
-    9 => '',
+    9 => ''
   }) }
 
   subject(:game) { described_class.new(player_1, player_2, fields) }
@@ -36,7 +36,7 @@ describe Game do
         6 => '',
         7 => '',
         8 => '',
-        9 => '',
+        9 => ''
       })
     end
 
@@ -47,21 +47,15 @@ describe Game do
 
   describe "#claim_field" do
     it "should allow player (current_turn) to claim an empty field" do
-      # allow(game.board.fields).to receive(:[]).with(1).and_return('X')
-      # allow(game.board.fields).to receive(:[]).with(1)
-      # allow(game.board.fields).to receive(:[])
-
       game.claim_field(1)
-      # expect(game.claim_field(1)).to eq 'X'
 
       expect(game.board.fields[1]).to eq 'X'
     end
 
     it "should raise an exception if field is taken" do
-      # allow(game.board.fields).to receive(:[]).with(1).and_return('X')
       game.claim_field(1)
 
-      expect{ game.claim_field(1) }.to raise_error "Field already claimed!"
+      expect { game.claim_field(1) }.to raise_error "Field already claimed!"
     end
 
     it "should change turn automatically if claiming field is OK" do
@@ -78,11 +72,10 @@ describe Game do
       game.claim_field(5)
 
       game.claim_field(3)
-      expect{ game.claim_field(6) }.to raise_error "Game is over!"
+      expect { game.claim_field(6) }.to raise_error "Game is over!"
     end
   end
 
-  # Should be part of the #claim_field describe block
   describe "#game_over?" do
     it "should declare a winner if there is one" do
       game.claim_field(1)
@@ -91,7 +84,7 @@ describe Game do
       game.claim_field(2)
       game.claim_field(5)
 
-      expect(game.claim_field(3)).to eq "#{player_1.name} wins!"
+      expect(game.claim_field(3)).to eq "#{player_1.name} wins"
     end
 
     it "should declare another winner if he won" do
@@ -103,7 +96,7 @@ describe Game do
 
       game.claim_field(9)
 
-      expect(game.claim_field(3)).to eq "#{player_2.name} wins!"
+      expect(game.claim_field(3)).to eq "#{player_2.name} wins"
     end
 
     it "should declare draw if there is no winner" do

@@ -25,8 +25,8 @@ class Game
       end_game if condition.all? { |val| val == 'X' }
       end_game if condition.all? { |val| val == 'O' }
 
-      return "#{@current_turn.name} wins!" if condition.all? { |val| val == 'X' }
-      return "#{@current_turn.name} wins!" if condition.all? { |val| val == 'O' }
+      return "#{@current_turn.name} wins" if condition.all? { |val| val == 'X' }
+      return "#{@current_turn.name} wins" if condition.all? { |val| val == 'O' }
     end
 
     return "It's a draw!" if draw?
@@ -44,7 +44,7 @@ class Game
   end
 
   def draw?
-    end_game if !@board.fields.values.any? &:empty?
+    end_game unless @board.fields.values.any? &:empty?
   end
 
   def end_game
@@ -68,7 +68,7 @@ class Game
       # Diagonal 1
       [@board.fields[1], @board.fields[5], @board.fields[9]],
       # Diagonal 2
-      [@board.fields[3], @board.fields[5], @board.fields[7]],
+      [@board.fields[3], @board.fields[5], @board.fields[7]]
     ]
   end
 end
